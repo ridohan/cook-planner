@@ -1,0 +1,14 @@
+# Use postgres/example user/password credentials
+version: '3.1'
+
+services:
+
+  postgre:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: cook
+      POSTGRES_PASSWORD: planner
+      POSTGRES_DB: cookplanner
+    ports:
+      - "5432:5432"
