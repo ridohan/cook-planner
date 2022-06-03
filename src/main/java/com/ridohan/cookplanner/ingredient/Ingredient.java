@@ -1,5 +1,8 @@
 package com.ridohan.cookplanner.ingredient;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 
 import javax.persistence.Column;
@@ -14,8 +17,18 @@ public class Ingredient  extends PanacheEntity {
     public String name;
 
     @ManyToOne
+    @JsonIgnore
     public IngredientFamily family;
 
+    public static Ingredient findByName(String name){
+        return find("name", name).firstResult();
+    }
+
+
+    @JsonGetter("family")
+    public String getFamilyName() {
+        return family.name;
+    }
 
     @Override
     public boolean equals(Object obj) {

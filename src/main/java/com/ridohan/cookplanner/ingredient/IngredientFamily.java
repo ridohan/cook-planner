@@ -2,22 +2,25 @@ package com.ridohan.cookplanner.ingredient;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
 public class IngredientFamily extends PanacheEntity {
 
-    @ManyToMany
-    public Set<Ingredient> ingredients;
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    public Set<Ingredient> ingredients = new HashSet<>();
 
 
     @Column(unique = true)
     public String name;
 
+
+    public static IngredientFamily findByName(String name){
+        return find("name", name).firstResult();
+    }
 
 
     @Override

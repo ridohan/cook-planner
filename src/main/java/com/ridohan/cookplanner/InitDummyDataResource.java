@@ -1,5 +1,6 @@
 package com.ridohan.cookplanner;
 
+import com.ridohan.cookplanner.ingredient.Ingredient;
 import com.ridohan.cookplanner.ingredient.IngredientFamily;
 
 import javax.transaction.Transactional;
@@ -15,10 +16,34 @@ public class InitDummyDataResource {
 
     @GET
     @Transactional
-    public void hello() {
-        IngredientFamily fruit = new IngredientFamily();
-        fruit.name = "Fruit";
-        fruit.persist();
+    public List<IngredientFamily> hello() {
+
+        Ingredient apple  = Ingredient.findByName("Apple");
+        if(apple == null){
+            apple = new Ingredient();
+            apple.name = "Apple";
+        }
+
+
+        IngredientFamily fruitFamily  = IngredientFamily.findByName("Fruit");
+        if(fruitFamily == null){
+            fruitFamily = new IngredientFamily();
+            fruitFamily.name = "Fruit";
+            fruitFamily.ingredients.add(apple);
+            apple.family=fruitFamily;
+
+            fruitFamily.persistAndFlush();
+        }
+
+
+
+
+
+
+
+
+
+        return IngredientFamily.listAll();
 
     }
 
