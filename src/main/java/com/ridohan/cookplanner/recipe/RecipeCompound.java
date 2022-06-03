@@ -1,5 +1,6 @@
 package com.ridohan.cookplanner.recipe;
 
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.ridohan.cookplanner.ingredient.Ingredient;
 import com.ridohan.cookplanner.quantity.Quantity;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
@@ -13,10 +14,15 @@ public class RecipeCompound extends PanacheEntity {
 
     @ManyToOne
     public Ingredient ingredient;
+
+    @JsonUnwrapped
     @Embedded
     public Quantity quantity;
 
     public Quantity getQuantity() {
         return quantity;
     }
+
+
+
 }
