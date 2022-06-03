@@ -18,11 +18,10 @@ public class InitDummyDataResource {
     @Transactional
     public List<IngredientFamily> hello() {
 
-        Ingredient apple  = Ingredient.findByName("Apple");
-        if(apple == null){
-            apple = new Ingredient();
-            apple.name = "Apple";
-        }
+        Ingredient apple  = findOrCreateIngredient("Apple");
+        Ingredient orange  = findOrCreateIngredient("Orange");
+        Ingredient pear  = findOrCreateIngredient("Pear");
+        Ingredient cherry  = findOrCreateIngredient("Cherry");
 
 
         IngredientFamily fruitFamily  = IngredientFamily.findByName("Fruit");
@@ -30,23 +29,30 @@ public class InitDummyDataResource {
             fruitFamily = new IngredientFamily();
             fruitFamily.name = "Fruit";
             fruitFamily.ingredients.add(apple);
+            fruitFamily.ingredients.add(orange);
+            fruitFamily.ingredients.add(pear);
+            fruitFamily.ingredients.add(cherry);
             apple.family=fruitFamily;
+            orange.family=fruitFamily;
+            pear.family=fruitFamily;
+            cherry.family=fruitFamily;
 
             fruitFamily.persistAndFlush();
         }
-
-
-
-
-
-
-
 
 
         return IngredientFamily.listAll();
 
     }
 
+    public Ingredient findOrCreateIngredient(String name){
+        Ingredient ingredient  = Ingredient.findByName(name);
+        if(ingredient == null){
+            ingredient = new Ingredient();
+            ingredient.name = name;
+        }
+        return ingredient;
+    }
 
 
 
