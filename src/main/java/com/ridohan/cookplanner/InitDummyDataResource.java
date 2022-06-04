@@ -38,9 +38,6 @@ public class InitDummyDataResource {
         if(recipe == null){
             recipe = new Recipe();
             recipe.name = recipeName;
-//            ingredients.forEach((k, v) -> {
-//
-//            });
 
             for (Map.Entry<String, Quantity> entry : ingredients.entrySet()) {
                 RecipeCompound recipeCompound = new RecipeCompound();
