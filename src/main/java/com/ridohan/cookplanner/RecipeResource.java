@@ -21,6 +21,16 @@ public class RecipeResource {
         return Recipe.listAll();
     }
 
+    @GET()
+    public Recipe findByName(@Valid String name) {
+        return Recipe.findByName(name);
+    }
+
+    @GET
+    @Path("/{id}")
+    public Recipe findById(@PathParam("id") Long recipeId) {
+        return Recipe.findById(recipeId);
+    }
 
 
     @POST
@@ -32,9 +42,9 @@ public class RecipeResource {
 
     @PATCH
     @Transactional
-    public List<IngredientFamily> update(@Valid Recipe recipe) {
+    public Recipe update(@Valid Recipe recipe) {
         recipe.persist();
-        return Recipe.listAll();
+        return recipe;
     }
 
     @DELETE
